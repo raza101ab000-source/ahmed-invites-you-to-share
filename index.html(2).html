@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ahmed Raza Stories & Insights</title>
+  <meta name="description" content="A sanctuary for original human-written stories, articles, and wisdom. No AI. No ads. Just truth. Share your voice.">
+  <meta name="author" content="Ahmed Raza">
+  <meta name="keywords" content="stories, articles, writing, literature, no ai, creative writing, personal essays, fiction, nonfiction">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Ahmed Raza Stories & Insights">
+  <meta property="og:description" content="A space for authentic, human-written stories and insights — no AI, no bots, just real voices.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ahmedrazastories.com">
+  <meta property="og:image" content="https://source.unsplash.com/random/1200x630/?book,library,writing">
+  <meta property="og:site_name" content="Ahmed Raza Stories & Insights">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>" type="image/svg+xml">
+
+  <!-- Fonts: Inter (UI), Georgia (Serif) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Georgia&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background-color: #f9fafb;
+      scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Georgia', serif;
+      color: #111827;
+      line-height: 1.3;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    /* Custom Styles */
+    .hero-text {
+      font-family: 'Georgia', serif;
+      line-height: 1.4;
+      color: #111827;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #1e40af, #7c3aed);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      font-size: 1rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #374151;
+      border: 2px solid #d1d5db;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .btn-outline:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .story-card {
+      transition: all 0.3s ease;
+      border: 1px solid #e5e7eb;
+      overflow: hidden;
+    }
+
+    .story-card:hover {
+      border-color: #3b82f6;
+      transform: scale(1.01);
+    }
+
+    .category-pill {
+      display: inline-block;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .read-more {
+      color: #3b82f6;
+      font-weight: 500;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .read-more:hover {
+      color: #1d4ed8;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+
+    .fade-in.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .modal.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 1rem;
+      max-width: 500px;
+      width: 90%;
+      padding: 2rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+
+    .modal.open .modal-content {
+      transform: scale(1);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #6b7280;
+      cursor: pointer;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: border 0.3s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    .textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .nav-link {
+      color: #4b5563;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: #3b82f6;
+    }
+
+    footer a.footer-link {
+      color: #9ca3af;
+      transition: color 0.3s ease;
+    }
+
+    footer a.footer-link:hover {
+      color: #3b82f6;
+    }
+
+    .no-ai-badge {
+      background: linear-gradient(90deg, #dc2626, #ea580c);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      font-weight: bold;
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .bg-hero {
+      background-image: url('https://source.unsplash.com/random/1600x900/?library,books,reading');
+      background-size: cover;
+      background-position: center;
+      height: 70vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-caption {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      color: white;
+    }
+
+    .story-preview {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .footer-social i {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: #9ca3af;
+    }
+
+    .footer-social i:hover {
+      color: #3b82f6;
+    }
+
+    .highlight {
+      background: linear-gradient(120deg, #bfdbfe, #ddd6fe);
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+    }
+
+    .signature {
+      font-family: 'Brush Script MT', cursive;
+      font-size: 1.5rem;
+      color: #3b82f6;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .bg-hero {
+        height: 50vh;
+      }
+
+      h1.text-5xl {
+        font-size: 2.5rem;
+      }
+
+      .btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-gray-50">
+
+<!-- Header -->
+<header class="bg-white shadow-sm sticky top-0 z-50">
+  <div class="container">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-700 rounded-xl flex items-center justify-center">
+          <i data-lucide="book-open" class="w-6 h-6 text-white"></i>
+        </div>
+        <span class="ml-2 text-xl font-bold text-gray-900">Ahmed<span class="text-blue-600">Raza</span> Stories</span>
+      </div>
+      <nav class="hidden md:flex space-x-8">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#stories" class="nav-link">Stories</a>
+        <a href="#articles" class="nav-link">Articles</a>
+        <a href="#submit" class="nav-link">Submit</a>
+        <a href="#about" class="nav-link">About</a>
+      </nav>
+      <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+    <div class="container px-4 pt-2 pb-3 space-y-1">
+      <a href="#home" class="block px-3 py-2 text-blue-600 font-medium">Home</a>
+      <a href="#stories" class="block px-3 py-2 text-gray-700">Stories</a>
+      <a href="#articles" class="block px-3 py-2 text-gray-700">Articles</a>
+      <a href="#submit" class="block px-3 py-2 text-gray-700">Submit</a>
+      <a href="#about" class="block px-3 py-2 text-gray-700">About</a>
+    </div>
+  </div>
+</header>
+
+<main id="main-content" class="flex-grow">
+
+  <!-- Hero Section -->
+  <section id="home" class="bg-hero">
+    <div class="bg-overlay"></div>
+    <div class="container hero-caption">
+      <h1 class="text-5xl md:text-7xl font-extrabold hero-text text-white mb-6 leading-tight animate-pulse">
+        Where Words <br /><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-purple-200">Come Alive</span>
+      </h1>
+      <p class="text-xl text-white mb-8 max-w-2xl mx-auto opacity-90">
+        A sanctuary for original, human-written stories and insights. 
+        No AI. No bots. Only truth.
+      </p>
+      <div class="inline-flex items-center no-ai-badge mb-8">
+        <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+        AI Content Not Accepted
+      </div>
+      <button onclick="openModal('registerModal')" class="btn btn-primary text-lg px-8 py-3 hover:shadow-xl float">
+        ✍️ Become a Writer
+      </button>
+    </div>
+  </section>
+
+  <!-- Mission Statement -->
+  <section class="py-20 bg-white">
+    <div class="container max-w-4xl text-center">
+      <h2 class="text-4xl font-bold text-gray-900 mb-8 fade-in">Why This Exists</h2>
+      <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-10 rounded-3xl border border-blue-100 shadow-lg fade-in" style="animation-delay: 0.2s">
+        <p class="text-xl text-gray-700 leading-relaxed">
+          In an age where machines write faster than humans, we lose something essential: <strong>soul</strong>.
+        </p>
+        <p class="text-xl text-gray-700 mt-6 leading-relaxed">
+          This site exists because I believe in <strong>real writing</strong> — words chosen with care, stories born from pain and joy, ideas shaped by lived experience.
+        </p>
+        <p class="text-xl text-gray-700 mt-6 leading-relaxed">
+          If you write something honest, I will publish it. That’s my promise.
+        </p>
+        <div class="mt-8">
+          <p class="font-semibold text-gray-900">— Ahmed Raza</p>
+          <p class="text-gray-600 text-sm">Founder & Keeper of Stories</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Stories -->
+  <section id="stories" class="py-20">
+    <div class="container">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-6 fade-in">Featured Stories</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in" style="animation-delay: 0.2s">
+          Real people. Real lives. Real words.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <!-- Story 1 -->
+        <article class="story-card bg-white rounded-2xl shadow-lg card-hover overflow-hidden group fade-in" style="animation-delay: 0.3s">
+          <div class="relative">
+            <img src="https://source.unsplash.com/random/600x400/?fiction,story" alt="The Last Library" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute top-4 left-4">
+              <span class="category-pill">Fiction</span>
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">The Last Library on Earth</h3>
+            <p class="text-gray-600 mb-2">By James Reed • Fiction</p>
+            <p class="text-sm text-gray-500 mb-4">Published: May 2024 | 1,850 words</p>
+            <p class="text-gray-600 story-preview mb-4">
+              In a world without books, a young girl discovers a forgotten library beneath the ruins of a city. 
+              What she finds changes everything.
+            </p>
+            <button onclick="alert('Coming soon! You will be able to read this story when live.')"
+                    class="read-more text-sm">
+              Read More →
+            </button>
+          </div>
+        </article>
+
+        <!-- Story 2 -->
+        <article class="story-card bg-white rounded-2xl shadow-lg card-hover overflow-hidden group fade-in" style="animation-delay: 0.4s">
+          <div class="relative">
+            <img src="https://source.unsplash.com/random/600x400/?memoir,grandfather" alt="The Clockmaker's Daughter" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute top-4 left-4">
+              <span class="category-pill">Memoir</span>
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">The Clockmaker’s Daughter</h3>
+            <p class="text-gray-600 mb-2">By Sarah Chen • Personal Essay</p>
+            <p class="text-sm text-gray-500 mb-4">Published: Apr 2024 | 2,100 words</p>
+            <p class="text-gray-600 story-preview mb-4">
+              My grandfather never spoke about his time during the war. But his clocks told the story he couldn’t say aloud.
+            </p>
+            <button onclick="alert('Coming soon! You will be able to read this story when live.')"
+                    class="read-more text-sm">
+              Read More →
+            </button>
+          </div>
+        </article>
+
+        <!-- Story 3 -->
+        <article class="story-card bg-white rounded-2xl shadow-lg card-hover overflow-hidden group fade-in" style="animation-delay: 0.5s">
+          <div class="relative">
+            <img src="https://source.unsplash.com/random/600x400/?desert,journey" alt="Crossing the Sahara" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute top-4 left-4">
+              <span class="category-pill">Adventure</span>
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">Crossing the Sahara</h3>
+            <p class="text-gray-600 mb-2">By David Kim • Travel</p>
+            <p class="text-sm text-gray-500 mb-4">Published: Mar 2024 | 3,200 words</p>
+            <p class="text-gray-600 story-preview mb-4">
+              Alone with only water and silence, I learned what it means to be truly lost — and then found.
+            </p>
+            <button onclick="alert('Coming soon! You will be able to read this story when live.')"
+                    class="read-more text-sm">
+              Read More →
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <section id="articles" class="py-20 bg-gray-50">
+    <div class="container">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-6 fade-in">Insightful Articles</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto fade-in" style="animation-delay: 0.2s">
+          Deep thinking. Real knowledge. Written by humans.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <!-- Article 1 -->
+        <article class="story-card bg-white rounded-2xl shadow-lg card-hover overflow-hidden group fade-in" style="animation-delay: 0.3s">
+          <div class="relative">
+            <img src="https://source.unsplash.com/random/600x400/?ai,technology" alt="AI & Humanity" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute top-4 left-4">
+              <span class="category-pill">Technology</span>
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">Why AI Can’t Replace Human Writing</h3>
+            <p class="text-gray-600 mb-2">By Ahmed Raza • Technology</p>
+            <p class="text-sm text-gray-500 mb-4">Published: Feb 2024 | 1,200 words</p>
+            <p class="text-gray-600 story-preview mb-4">
+              Machines can mimic language, but they cannot feel. And feeling is at the heart of every great sentence.
+            </p>
+            <button onclick="alert('Coming soon! You will be able to read this article when live.')"
+                    class="read-more text-sm">
+              Read More →
+            </button>
+          </div>
+        </article>
+
+        <!-- Article 2 -->
+        <article class="story-card bg-white rounded-2xl shadow-lg card-hover overflow-hidden group fade-in" style="animation-delay: 0.4s">
+          <div class="relative">
+            <img src="https://source.unsplash.com/random/600x400/?mindfulness,reading" alt="Mindful Reading" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute top-4 left-4">
+              <span class="category-pill">Wellness</span>
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">The Art of Mindful Reading</h3>
+            <p class="text-gray-600 mb-2">By Maya Johnson • Lifestyle</p>
+            <p class="text-sm text-gray-500 mb-4">Published: Jan 2024 | 1,500 words</p>
+            <p class="text-gray-600 story-preview mb-4">
+              In a distracted world, reading slowly is a radical act. Here’s how to reclaim your attention.
+            </p>
+            <button onclick="alert('Coming soon! You will be able to read this article when live.')"
+                    class="read-more text-sm">
+              Read More →
+            </button>
+          </div>
+        </article>
+
+        <!-- Article 3 -->
+        <article class="story-card bg-white rounded-2xl shadow-lg card-hover overflow-hidden group fade-in" style="animation-delay: 0.5s">
+          <div class="relative">
+            <img src="https://source.unsplash.com/random/600x400/?school,education" alt="Future of Education" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div class="absolute top-4 left-4">
+              <span class="category-pill">Education</span>
+            </div>
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-2xl font-bold text-gray-900 mb-3 line-clamp-2">What Schools Don’t Teach Us</h3>
+            <p class="text-gray-600 mb-2">By Lena Park • Society</p>
+            <p class="text-sm text-gray-500 mb-4">Published: Dec 2023 | 2,000 words</p>
+            <p class="text-gray-600 story-preview mb-4">
+              Empathy. Resilience. Failure. These are the lessons missing from every curriculum.
+            </p>
+            <button onclick="alert('Coming soon! You will be able to read this article when live.')"
+                    class="read-more text-sm">
+              Read More →
+            </button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Submit Your Work -->
+  <section id="submit" class="py-20 bg-white">
+    <div class="container max-w-4xl">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-gray-900 mb-6">Share Your Voice</h2>
+        <p class="text-xl text-gray-600">
+          Have a story to tell? An idea to share? We want to hear from you.
+        </p>
+      </div>
+
+      <div class="bg-gradient-to-br from-green-50 to-blue-50 p-8 rounded-3xl border border-green-100 shadow-lg">
+        <div class="flex flex-col md:flex-row gap-8 items-center">
+          <div class="md:w-1/2">
+            <img src="https://source.unsplash.com/random/500x400/?writer,pen" alt="Write Your Story" class="rounded-2xl shadow-lg w-full" />
+          </div>
+          <div class="md:w-1/2">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Submit Your Work</h3>
+            <p class="text-gray-700 mb-4">
+              Whether it’s a short story, personal essay, poem, or article — if it’s written by you, we’ll publish it.
+            </p>
+            <ul class="space-y-2 text-gray-700 mb-6">
+              <li>✅ Must be original</li>
+              <li>✅ Must be human-written</li>
+              <li>❌ No AI-generated content</li>
+              <li>✅ Any length accepted</li>
+            </ul>
+            <button onclick="openModal('submitModal')" class="btn btn-primary w-full">
+              ➕ Upload Your Story
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Me -->
+  <section id="about" class="py-20">
+    <div class="container max-w-5xl">
+      <div class="flex flex-col md:flex-row gap-12 items-center">
+        <div class="md:w-1/3">
+          <img src="https://source.unsplash.com/random/400x500/?portrait,man,pakistani" alt="Ahmed Raza" class="rounded-3xl shadow-2xl w-full" />
+        </div>
+        <div class="md:w-2/3">
+          <h2 class="text-4xl font-bold text-gray-900 mb-6">About the Founder</h2>
+          <h3 class="text-2xl font-semibold text-blue-700 mb-4">Ahmed Raza</h3>
+          <p class="text-lg text-gray-700 mb-4">
+            I’m not a tech billionaire. I’m not a celebrity. I’m just a man who believes in the power of words.
+          </p>
+          <p class="text-lg text-gray-700 mb-4">
+            After years of watching AI flood the internet with soulless content, I decided to create a space where <strong>real writing</strong> still matters.
+          </p>
+          <p class="text-lg text-gray-700 mb-6">
+            This site is my gift to writers everywhere — a place where your voice won’t be drowned out by machines.
+          </p>
+          <div class="border-l-4 border-blue-500 pl-6 mb-6">
+            <p class="italic text-gray-600">“If you write something true, I will publish it.”</p>
+            <p class="signature mt-2">— Ahmed Raza</p>
+          </div>
+          <div class="space-y-2 text-gray-700">
+            <p><strong>Email:</strong> <a href="mailto:raza101ab000@gmail.com" class="text-blue-600">raza101ab000@gmail.com</a></p>
+            <p><strong>Phone:</strong> +92 325 7385732</p>
+            <p><strong>Location:</strong> Pakistan</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 bg-gradient-to-br from-blue-900 to-purple-900 text-white">
+    <div class="container text-center">
+      <h2 class="text-5xl font-bold mb-6">Your Story Matters</h2>
+      <p class="text-xl mb-10 max-w-3xl mx-auto opacity-90">
+        The world needs more truth, more courage, more beauty. 
+        If you have a story inside you, let it out.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-6 justify-center">
+        <button onclick="openModal('submitModal')" class="btn btn-primary px-10 py-4 text-lg hover:shadow-2xl">
+          ✍️ Submit Your Work
+        </button>
+        <button onclick="openModal('registerModal')" class="btn btn-outline text-white border-white px-10 py-4 text-lg">
+          👤 Register as Writer
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Policy -->
+  <section class="py-20 bg-white">
+    <div class="container max-w-4xl">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Privacy & Integrity Policy</h2>
+      <div class="bg-red-50 border border-red-200 rounded-2xl p-8 mb-8">
+        <h3 class="text-xl font-bold text-red-900 mb-4">🚫 No AI Content Allowed</h3>
+        <p class="text-red-800">
+          All submissions must be 100% human-written. We manually review every piece. 
+          If we detect AI generation, the submission will be rejected.
+        </p>
+      </div>
+      <div class="space-y-6 text-gray-700">
+        <p>
+          We collect minimal data: your name, email, and writing. 
+          Your content will be published under your name unless you request anonymity.
+        </p>
+        <p>
+          We do not sell your information. We do not run ads. 
+          This site exists solely to promote authentic human expression.
+        </p>
+        <p>
+          By submitting, you grant us permission to publish your work. 
+          You retain full copyright.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white pt-16 pb-8">
+  <div class="container">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <div>
+        <div class="flex items-center mb-4">
+          <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-700 rounded-xl flex items-center justify-center">
+            <i data-lucide="book-open" class="w-6 h-6 text-white"></i>
+          </div>
+          <span class="ml-2 text-xl font-bold">AhmedRaza Stories</span>
+        </div>
+        <p class="text-gray-400 mb-4">
+          A home for real writing — no AI, no algorithms, just human voices.
+        </p>
+        <div class="flex space-x-4 footer-social">
+          <a href="#"><i data-lucide="twitter"></i></a>
+          <a href="#"><i data-lucide="facebook"></i></a>
+          <a href="#"><i data-lucide="linkedin"></i></a>
+          <a href="#"><i data-lucide="mail"></i></a>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-4">Platform</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="footer-link">Submit Story</a></li>
+          <li><a href="#" class="footer-link">Browse Content</a></li>
+          <li><a href="#" class="footer-link">Guidelines</a></li>
+          <li><a href="#" class="footer-link">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-4">For Writers</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="footer-link">Why Join?</a></li>
+          <li><a href="#" class="footer-link">Content Rules</a></li>
+          <li><a href="#" class="footer-link">Privacy Policy</a></li>
+          <li><a href="#" class="footer-link">Terms of Use</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-bold text-lg mb-4">Contact</h3>
+        <ul class="space-y-2">
+          <li><a href="mailto:raza101ab000@gmail.com" class="footer-link">Email Me</a></li>
+          <li><a href="tel:+923257385732" class="footer-link">Call Me</a></li>
+          <li><a href="#" class="footer-link">Message via Site</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
+      <p>&copy; 2024 Ahmed Raza Stories & Insights. All rights reserved.</p>
+      <p class="mt-1">
+        <strong>No AI content is permitted. All submissions are manually reviewed for authenticity.</strong>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Modals -->
+<div id="registerModal" class="modal">
+  <div class="modal-content">
+    <h3 class="text-2xl font-bold mb-6">Register as a Writer</h3>
+    <form onsubmit="event.preventDefault(); alert('Thank you! Your registration will be processed when live.'); closeModal('registerModal');">
+      <div class="form-group">
+        <label class="block mb-2 font-medium">Full Name</label>
+        <input type="text" class="form-control" required placeholder="Ahmed Raza" />
+      </div>
+      <div class="form-group">
+        <label class="block mb-2 font-medium">Email</label>
+        <input type="email" class="form-control" required placeholder="you@example.com" />
+      </div>
+      <div class="form-group">
+        <label class="block mb-2 font-medium">Are you a Writer or Reader?</label>
+        <select class="form-control" required>
+          <option value="">Select role</option>
+          <option value="writer">Writer (I want to submit)</option>
+          <option value="reader">Reader (I want to enjoy stories)</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary w-full mt-4">Register Now</button>
+    </form>
+    <button class="close-modal" onclick="closeModal('registerModal')">×</button>
+  </div>
+</div>
+
+<div id="submitModal" class="modal">
+  <div class="modal-content">
+    <h3 class="text-2xl font-bold mb-6">Submit Your Story</h3>
+    <form onsubmit="event.preventDefault(); alert('Thank you! Your story will be reviewed when live.'); closeModal('submitModal');">
+      <div class="form-group">
+        <label class="block mb-2 font-medium">Title</label>
+        <input type="text" class="form-control" required placeholder="The Last Letter" />
+      </div>
+      <div class="form-group">
+        <label class="block mb-2 font-medium">Category</label>
+        <select class="form-control" required>
+          <option>Fiction</option>
+          <option>Personal Essay</option>
+          <option>Poetry</option>
+          <option>Article</option>
+          <option>Travel</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="block mb-2 font-medium">Your Story (Paste Text)</label>
+        <textarea class="form-control textarea" required placeholder="Write your story here... Minimum 300 words. Must be human-written."></textarea>
+      </div>
+      <div class="bg-yellow-50 border border-yellow-200 p-4 rounded-lg mb-4 text-sm text-yellow-800">
+        ⚠️ Warning: AI-generated content will be rejected. We verify authenticity.
+      </div>
+      <button type="submit" class="btn btn-primary w-full mt-4">Submit for Review</button>
+    </form>
+    <button class="close-modal" onclick="closeModal('submitModal')">×</button>
+  </div>
+</div>
+
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+
+  // Toggle mobile menu
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
+  }
+
+  // Modal Functions
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+  }
+
+  // Close modal on outside click
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', e => {
+      if (e.target === modal) {
+        modal.classList.remove('open');
+      }
+    });
+  });
+
+  // Fade-in animation on scroll
+  const faders = document.querySelectorAll('.fade-in');
+  const appearOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -100px 0px"
+  };
+
+  const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('active');
+      observer.unobserve(entry.target);
+    });
+  }, appearOptions);
+
+  faders.forEach(fader => {
+    fader.classList.add('fade-in');
+    appearOnScroll.observe(fader);
+  });
+</script>
+
+</body>
+</html>
